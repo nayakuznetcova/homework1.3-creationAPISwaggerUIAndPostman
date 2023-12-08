@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/student")
@@ -22,13 +23,17 @@ public class StudentController {
     }
 
     @GetMapping
-    public Student get(@RequestParam("id") Long id) {
-        return studentService.get(id);
+    public String get(@RequestParam("id") Long id) {
+        try {
+            return studentService.get(id).toString();
+        } catch (NoSuchElementException e) {
+            return "Это id не найдено";
+        }
     }
 
     @PutMapping
-    public Student set(@RequestBody Student student) {
-        return studentService.set(student);
+    public Student update(@RequestBody Student student) {
+        return studentService.update(student);
     }
 
     @DeleteMapping

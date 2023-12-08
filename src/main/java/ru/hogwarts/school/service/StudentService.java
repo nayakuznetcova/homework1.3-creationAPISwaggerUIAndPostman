@@ -24,7 +24,7 @@ public class StudentService {
         return studentRepository.findById(id).get();
     }
 
-    public Student set(Student student) {
+    public Student update(Student student) {
         return studentRepository.save(student);
     }
 

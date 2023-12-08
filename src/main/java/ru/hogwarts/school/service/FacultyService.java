@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class FacultyService {
@@ -24,7 +25,7 @@ public class FacultyService {
         return facultyRepository.findById(id).get();
     }
 
-    public Faculty set(Faculty faculty) {
+    public Faculty update(Faculty faculty) {
         return facultyRepository.save(faculty);
     }
 

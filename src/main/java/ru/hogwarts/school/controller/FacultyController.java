@@ -5,6 +5,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/faculty")
@@ -21,13 +22,17 @@ public class FacultyController {
     }
 
     @GetMapping
-    public Faculty get(@RequestParam Long id) {
-        return facultyService.get(id);
+    public String get(@RequestParam Long id) {
+        try {
+            return facultyService.get(id).toString();
+        } catch (NoSuchElementException e) {
+            return "Это id не найдено";
+        }
     }
 
     @PutMapping
-    public Faculty set(@RequestBody Faculty faculty) {
-        return facultyService.set(faculty);
+    public Faculty update(@RequestBody Faculty faculty) {
+        return facultyService.update(faculty);
     }
 
     @DeleteMapping
