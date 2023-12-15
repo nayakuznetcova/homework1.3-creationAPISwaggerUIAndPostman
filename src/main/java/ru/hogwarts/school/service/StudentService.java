@@ -1,10 +1,12 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.exception.NoFoundIdException;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 public class StudentService {
@@ -20,8 +22,8 @@ public class StudentService {
         return student;
     }
 
-    public Student get(Long id) {
-        return studentRepository.findById(id).get();
+    public Student get(Long id) throws NoFoundIdException {
+        return studentRepository.findById(id).orElseThrow(()->new NoFoundIdException("Это id не найдено"));
     }
 
     public Student update(Student student) {
@@ -34,5 +36,9 @@ public class StudentService {
 
     public List<Student> getStudentsByAge(int age) {
         return studentRepository.findByAge(age);
+    }
+
+    public List<Student> getStudentsByAgeBetween(int min, int max) {
+        return studentRepository.findByAgeBetween(min, max);
     }
 }

@@ -1,6 +1,7 @@
 package ru.hogwarts.school.controller;
 
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.exception.NoFoundIdException;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
@@ -26,7 +27,7 @@ public class StudentController {
     public String get(@RequestParam("id") Long id) {
         try {
             return studentService.get(id).toString();
-        } catch (NoSuchElementException e) {
+        } catch (NoFoundIdException e) {
             return "Это id не найдено";
         }
     }
@@ -44,5 +45,9 @@ public class StudentController {
     @GetMapping("/getByAge")
     public List<Student> getStudentsByAge(@RequestParam int age) {
         return studentService.getStudentsByAge(age);
+    }
+    @GetMapping("/getByAgeBetween")
+    public List<Student> getStudentsByAgeBetween(@RequestParam int min, @RequestParam int max) {
+        return studentService.getStudentsByAgeBetween(min, max);
     }
 }

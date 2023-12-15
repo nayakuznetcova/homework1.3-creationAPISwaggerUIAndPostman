@@ -1,6 +1,7 @@
 package ru.hogwarts.school.service;
 
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.exception.NoFoundIdException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
 
@@ -21,8 +22,8 @@ public class FacultyService {
         return faculty;
     }
 
-    public Faculty get(Long id) {
-        return facultyRepository.findById(id).get();
+    public Faculty get(Long id) throws NoFoundIdException{
+        return facultyRepository.findById(id).orElseThrow(()->new NoFoundIdException("Это id не найдено"));
     }
 
     public Faculty update(Faculty faculty) {

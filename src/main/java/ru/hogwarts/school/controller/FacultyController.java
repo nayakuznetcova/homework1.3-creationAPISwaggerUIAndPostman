@@ -1,6 +1,7 @@
 package ru.hogwarts.school.controller;
 
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school.exception.NoFoundIdException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyService;
 
@@ -25,7 +26,7 @@ public class FacultyController {
     public String get(@RequestParam Long id) {
         try {
             return facultyService.get(id).toString();
-        } catch (NoSuchElementException e) {
+        } catch (NoFoundIdException e) {
             return "Это id не найдено";
         }
     }
