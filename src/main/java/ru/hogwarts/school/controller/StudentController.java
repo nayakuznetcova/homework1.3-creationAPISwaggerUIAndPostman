@@ -42,12 +42,16 @@ public class StudentController {
         studentService.delete(id);
     }
 
-    @GetMapping("/getByAge")
+    @GetMapping("/get-by-age")
     public List<Student> getStudentsByAge(@RequestParam int age) {
         return studentService.getStudentsByAge(age);
     }
-    @GetMapping("/getByAgeBetween")
+    @GetMapping("/get-by-age-between")
     public List<Student> getStudentsByAgeBetween(@RequestParam int min, @RequestParam int max) {
         return studentService.getStudentsByAgeBetween(min, max);
+    }
+    @GetMapping("/get-students-by-faculty")
+    public List<Student> getStudentsByFaculty(@RequestParam String facultyName){
+        return studentService.getStudentsByFaculty(facultyName);
     }
 }

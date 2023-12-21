@@ -3,6 +3,7 @@ package ru.hogwarts.school.controller;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.exception.NoFoundIdException;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
 
 import java.util.List;
@@ -41,8 +42,13 @@ public class FacultyController {
         facultyService.delete(id);
     }
 
-    @GetMapping("/getByColor")
+    @GetMapping("/get-by-color")
     public List<Faculty> getFacultyByColor(@RequestParam String color) {
         return facultyService.getFacultyByColor(color);
+    }
+
+    @GetMapping("/get-faculty-by-student")
+    public List<Faculty> getFacultyByStudent(@RequestParam Long id){
+        return facultyService.getFacultyByStudent(id);
     }
 }
