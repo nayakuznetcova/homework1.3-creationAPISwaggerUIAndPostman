@@ -39,7 +39,7 @@ public class FacultyService {
         return facultyRepository.findByColor(color);
     }
 
-    public List<Faculty> getFacultyByStudent(Long id){
+    public Faculty getFacultyByStudent(Long id){
         return facultyRepository.getFacultyByStudent(id);
     }
 }

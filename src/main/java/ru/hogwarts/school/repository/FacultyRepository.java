@@ -14,7 +14,7 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long> {
     @Query(value = "select faculty.* from student " +
             "inner join faculty on student.faculty_id=faculty.id " +
             "where student.id=?1", nativeQuery = true)
-    List<Faculty> getFacultyByStudent(Long id);
+    Faculty getFacultyByStudent(Long id);
 
 }
 

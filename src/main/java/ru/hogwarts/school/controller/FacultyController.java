@@ -48,7 +48,7 @@ public class FacultyController {
     }
 
     @GetMapping("/get-faculty-by-student")
-    public List<Faculty> getFacultyByStudent(@RequestParam Long id){
+    public Faculty getFacultyByStudent(@RequestParam Long id){
         return facultyService.getFacultyByStudent(id);
     }
 }
