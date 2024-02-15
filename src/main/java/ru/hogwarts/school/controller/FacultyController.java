@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.exception.NoFoundIdException;
 import ru.hogwarts.school.model.Faculty;
@@ -19,36 +20,44 @@ public class FacultyController {
     }
 
     @PostMapping
-    public Faculty add(@RequestParam String name, @RequestParam String color) {
-        return facultyService.add(name, color);
+    public ResponseEntity<Faculty> add(@RequestBody Faculty faculty) {
+        Faculty newFaculty = facultyService.add(faculty);
+        return ResponseEntity.ok(newFaculty);
     }
 
     @GetMapping
-    public String get(@RequestParam Long id) {
+    public ResponseEntity<Faculty> get(@RequestParam Long id) {
         try {
-            return facultyService.get(id).toString();
+            Faculty faculty = facultyService.get(id);
+            return ResponseEntity.ok(faculty);
         } catch (NoFoundIdException e) {
-            return "Это id не найдено";
+            return ResponseEntity.badRequest().build();
         }
     }
 
     @PutMapping
-    public Faculty update(@RequestBody Faculty faculty) {
-        return facultyService.update(faculty);
+    public ResponseEntity<Faculty> update(@RequestBody Faculty faculty) {
+        Faculty faculty1 = facultyService.update(faculty);
+        return ResponseEntity.ok(faculty1);
+
     }
 
     @DeleteMapping
-    public void delete(@RequestParam Long id) {
+    public ResponseEntity<Void> delete(@RequestParam Long id) {
         facultyService.delete(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/get-by-color")
-    public List<Faculty> getFacultyByColor(@RequestParam String color) {
-        return facultyService.getFacultyByColor(color);
+    public ResponseEntity<List<Faculty>> getFacultyByColor(@RequestParam String color) {
+        List<Faculty> facultyByColor = facultyService.getFacultyByColor(color);
+        return ResponseEntity.ok(facultyByColor);
+
     }
 
     @GetMapping("/get-faculty-by-student")
-    public Faculty getFacultyByStudent(@RequestParam Long id){
-        return facultyService.getFacultyByStudent(id);
+    public ResponseEntity<Faculty> getFacultyByStudent(@RequestParam Long id){
+        Faculty facultyByStudent = facultyService.getFacultyByStudent(id);
+        return ResponseEntity.ok(facultyByStudent);
     }
 }

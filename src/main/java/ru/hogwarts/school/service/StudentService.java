@@ -4,9 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exception.NoFoundIdException;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
-
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @Service
 public class StudentService {
@@ -18,8 +16,7 @@ public class StudentService {
 
     public Student add(String name, int age) {
         Student student = new Student(name, age);
-        studentRepository.save(student);
-        return student;
+        return studentRepository.save(student);
     }
 
     public Student get(Long id) throws NoFoundIdException {
