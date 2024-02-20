@@ -15,4 +15,16 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
             "inner join faculty on student.faculty_id=faculty.id " +
             "where faculty.name=?1", nativeQuery = true)
     List<Student> getStudentsByFaculty(String facultyName);
+
+    @Query(value = "select count(*) from student", nativeQuery = true)
+    Long getCountStudent();
+
+    @Query(value = "select avg(age) from student", nativeQuery = true)
+    Long getAverageAgeStudent();
+
+    @Query(value = "select * from student " +
+            "order by id desc " +
+            "limit 5", nativeQuery = true)
+    List<Student> getLastStudents();
+
 }

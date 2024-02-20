@@ -42,4 +42,16 @@ public class StudentService {
     public List<Student> getStudentsByFaculty(String facultyName){
         return studentRepository.getStudentsByFaculty(facultyName);
     }
+
+    public Long getCountStudent(){
+        return studentRepository.getCountStudent();
+    }
+
+    public Long getAverageAgeStudent(){
+        return studentRepository.getAverageAgeStudent();
+    }
+
+    public List<Student> getLastStudents(){
+        return studentRepository.getLastStudents();
+    }
 }

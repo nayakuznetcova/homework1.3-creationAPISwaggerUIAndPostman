@@ -56,4 +56,19 @@ public class StudentController {
     public List<Student> getStudentsByFaculty(@RequestParam String facultyName) {
         return studentService.getStudentsByFaculty(facultyName);
     }
+
+    @GetMapping("/get-count-student")
+    public Long getCountStudent(){
+        return studentService.getCountStudent();
+    }
+
+    @GetMapping("/get-average-age-student")
+    public Long getAverageAgeStudent(){
+        return studentService.getAverageAgeStudent();
+    }
+
+    @GetMapping("/get-last-students")
+    public List<Student> getLastStudents(){
+        return studentService.getLastStudents();
+    }
 }
