@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.exception.NoFoundIdException;
@@ -11,6 +13,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.List;
 
 
 @Service
@@ -57,5 +60,10 @@ public class AvatarService {
 
     public Avatar getAvatarById(Long id){
         return avatarRepository.findByStudentId(id);
+    }
+
+    public List<Avatar> getAllAvatars(Integer page, Integer size){
+        Pageable pageable = PageRequest.of(page, size);
+        return avatarRepository.findAll(pageable).getContent();
     }
 }
