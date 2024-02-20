@@ -1,6 +1,6 @@
 package ru.hogwarts.school.exception;
 
-public class NoFoundIdException extends Exception{
+public class NoFoundIdException extends Exception {
     public NoFoundIdException() {
     }
 
