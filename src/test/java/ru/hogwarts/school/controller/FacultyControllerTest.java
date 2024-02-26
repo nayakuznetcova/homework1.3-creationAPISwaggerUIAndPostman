@@ -35,7 +35,9 @@ public class FacultyControllerTest {
     private String name1 = "Hufflepuff";
     private String name2 = "Ravenclaw";
     private String color1 = "yellow";
-    private String color2 = "purple";
+    private String color2 = "blue";
+    private Long id1 = 1L;
+    private Long id2 =2L;
 
     @Test
     public void postTest() throws Exception {
@@ -50,7 +52,7 @@ public class FacultyControllerTest {
                         .content(facultyObject.toString())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.id").value(id1))
                 .andExpect(jsonPath("$.name").value(name1))
                 .andExpect(jsonPath("$.color").value(color1));
     }
@@ -63,7 +65,7 @@ public class FacultyControllerTest {
                         .get("/faculty?id=1")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.id").value(id1))
                 .andExpect(jsonPath("$.name").value(name1))
                 .andExpect(jsonPath("$.color").value(color1));
     }
@@ -81,7 +83,7 @@ public class FacultyControllerTest {
                         .content(facultyObject.toString())
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.id").value(id1))
                 .andExpect(jsonPath("$.name").value(name1))
                 .andExpect(jsonPath("$.color").value(color1));
     }
@@ -102,10 +104,10 @@ public class FacultyControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
-                .andExpect(jsonPath("$[0].id").value(1L))
+                .andExpect(jsonPath("$[0].id").value(id1))
                 .andExpect(jsonPath("$[0].name").value(name1))
                 .andExpect(jsonPath("$[0].color").value(color1))
-                .andExpect(jsonPath("$[1].id").value(2L))
+                .andExpect(jsonPath("$[1].id").value(id2))
                 .andExpect(jsonPath("$[1].name").value(name2))
                 .andExpect(jsonPath("$[1].color").value(color2));
     }
@@ -118,7 +120,7 @@ public class FacultyControllerTest {
                         .get("/faculty/get-faculty-by-student?id=1")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value(1L))
+                .andExpect(jsonPath("$.id").value(id1))
                 .andExpect(jsonPath("$.name").value(name1))
                 .andExpect(jsonPath("$.color").value(color1));
 
@@ -135,7 +137,7 @@ public class FacultyControllerTest {
         Faculty facultyTest = new Faculty();
         facultyTest.setName(name1);
         facultyTest.setColor(color1);
-        facultyTest.setId(1L);
+        facultyTest.setId(id1);
         return facultyTest;
     }
 
@@ -143,7 +145,7 @@ public class FacultyControllerTest {
         Faculty facultyTest = new Faculty();
         facultyTest.setName(name2);
         facultyTest.setColor(color2);
-        facultyTest.setId(2L);
+        facultyTest.setId(id2);
         return facultyTest;
     }
 }

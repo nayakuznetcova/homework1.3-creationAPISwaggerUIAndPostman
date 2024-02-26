@@ -22,6 +22,8 @@ public class StudentServiceTest {
     private String name2 = "Petr";
     private int age1 = 22;
     private int age2 = 20;
+    private Long id1 = 1L;
+    private Long id2 = 2L;
     @BeforeEach
     public void init(){
         studentRepository = Mockito.mock(StudentRepository.class);
@@ -29,15 +31,15 @@ public class StudentServiceTest {
     }
     @Test
     public void getTest() throws NoFoundIdException {
-        when(studentRepository.findById(2L)).thenReturn(Optional.of(getStudent2()));
+        when(studentRepository.findById(id2)).thenReturn(Optional.of(getStudent2()));
 
-        Student student = studentService.get(2L);
+        Student student = studentService.get(id2);
         assertEquals(getStudent2(), student);
     }
 
     @Test
     public void getNoFoundIdExceptionTest(){
-        assertThrows(NoFoundIdException.class, ()->studentService.get(3L));
+        assertThrows(NoFoundIdException.class, ()->studentService.get(id2));
     }
 
     @Test
@@ -92,7 +94,7 @@ public class StudentServiceTest {
         Student studentTest = new Student();
         studentTest.setName(name1);
         studentTest.setAge(age1);
-        studentTest.setId(1L);
+        studentTest.setId(id1);
         return studentTest;
     }
 
@@ -100,7 +102,7 @@ public class StudentServiceTest {
         Student studentTest = new Student();
         studentTest.setName(name2);
         studentTest.setAge(age2);
-        studentTest.setId(2L);
+        studentTest.setId(id2);
         return studentTest;
     }
 }

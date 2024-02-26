@@ -9,8 +9,10 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ru.hogwarts.school.model.Faculty;
+import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.FacultyService;
 
+import java.util.Arrays;
 import java.util.Objects;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
@@ -21,10 +23,10 @@ public class FacultyControllerRestTest {
     private int port;
     @Autowired
     private TestRestTemplate testRestTemplate;
-    private String name1 = "Ravenclaw";
-    private String name2 = "Hufflepuff";
+    private String name1 = "Hufflepuff";
+    private String name2 = "Ravenclaw";
     private String color1 = "yellow";
-    private String color2 = "purple";
+    private String color2 = "blue";
 
     @Test
     public void contextLoad() {

@@ -35,6 +35,8 @@ public class StudentControllerTest {
     private String name2 = "Petr";
     private int age1 = 22;
     private int age2 = 20;
+    private Long id1 = 1L;
+    private Long id2 = 2L;
 
     @Test
     public void postTest() throws Exception {
@@ -43,7 +45,7 @@ public class StudentControllerTest {
         mockMvc.perform(MockMvcRequestBuilders
                         .post("/student?name=" + name1 + "&age=" + age1))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value("1"))
+                .andExpect(jsonPath("$.id").value(id1))
                 .andExpect(jsonPath("$.name").value(name1))
                 .andExpect(jsonPath("$.age").value(age1));
 
@@ -54,7 +56,7 @@ public class StudentControllerTest {
         when(studentRepository.findById(any(Long.class))).thenReturn(Optional.of(getStudent1()));
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/student?id=1")
+                        .get("/student?id=" + id1)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
@@ -72,7 +74,7 @@ public class StudentControllerTest {
                         .content(studentObject.toString())
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.id").value("1"))
+                .andExpect(jsonPath("$.id").value(id1))
                 .andExpect(jsonPath("$.name").value(name1))
                 .andExpect(jsonPath("$.age").value(age1));
     }
@@ -80,7 +82,7 @@ public class StudentControllerTest {
     @Test
     public void deleteTest() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders
-                        .delete("/student?id=1"))
+                        .delete("/student?id=" + id1))
                 .andExpect(status().isOk());
     }
 
@@ -89,16 +91,16 @@ public class StudentControllerTest {
         when(studentRepository.findByAge(any(Integer.class))).thenReturn(getStudents());
 
         mockMvc.perform(MockMvcRequestBuilders
-                        .get("/student/get-by-age?age=22")
+                        .get("/student/get-by-age?age=" + age1)
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].age").value(age1))
                 .andExpect(jsonPath("$[0].name").value(name1))
-                .andExpect(jsonPath("$[0].id").value(1L))
+                .andExpect(jsonPath("$[0].id").value(id1))
                 .andExpect(jsonPath("$[1].age").value(age2))
                 .andExpect(jsonPath("$[1].name").value(name2))
-                .andExpect(jsonPath("$[1].id").value(2L));
+                .andExpect(jsonPath("$[1].id").value(id2));
     }
 
     @Test
@@ -111,10 +113,10 @@ public class StudentControllerTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].age").value(age1))
                 .andExpect(jsonPath("$[0].name").value(name1))
-                .andExpect(jsonPath("$[0].id").value(1L))
+                .andExpect(jsonPath("$[0].id").value(id1))
                 .andExpect(jsonPath("$[1].age").value(age2))
                 .andExpect(jsonPath("$[1].name").value(name2))
-                .andExpect(jsonPath("$[1].id").value(2L));
+                .andExpect(jsonPath("$[1].id").value(id2));
     }
 
     @Test
@@ -126,17 +128,17 @@ public class StudentControllerTest {
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].age").value(age1))
                 .andExpect(jsonPath("$[0].name").value(name1))
-                .andExpect(jsonPath("$[0].id").value(1L))
+                .andExpect(jsonPath("$[0].id").value(id1))
                 .andExpect(jsonPath("$[1].age").value(age2))
                 .andExpect(jsonPath("$[1].name").value(name2))
-                .andExpect(jsonPath("$[1].id").value(2L));
+                .andExpect(jsonPath("$[1].id").value(id2));
     }
 
     private Student getStudent1() {
         Student studentTest = new Student();
         studentTest.setName(name1);
         studentTest.setAge(age1);
-        studentTest.setId(1L);
+        studentTest.setId(id1);
         return studentTest;
 
     }
@@ -145,7 +147,7 @@ public class StudentControllerTest {
         Student studentTest = new Student();
         studentTest.setName(name2);
         studentTest.setAge(age2);
-        studentTest.setId(2L);
+        studentTest.setId(id2);
         return studentTest;
     }
 

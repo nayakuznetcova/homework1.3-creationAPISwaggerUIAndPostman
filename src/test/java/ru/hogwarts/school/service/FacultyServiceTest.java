@@ -19,8 +19,10 @@ public class FacultyServiceTest {
     private FacultyRepository facultyRepository;
     private String name1 = "Hufflepuff";
     private String name2 = "Ravenclaw";
-    private String color1 = "purple";
-    private String color2 = "yellow";
+    private String color1 = "yellow";
+    private String color2 = "blue";
+    private Long id1 = 1L;
+    private Long id2 = 2L;
     @BeforeEach
     public void init(){
         facultyRepository = Mockito.mock(FacultyRepository.class);
@@ -29,15 +31,15 @@ public class FacultyServiceTest {
 
     @Test
     public void getTest() throws NoFoundIdException {
-        when(facultyRepository.findById(1L)).thenReturn(Optional.of(getFaculty1()));
+        when(facultyRepository.findById(id1)).thenReturn(Optional.of(getFaculty1()));
 
-        Faculty faculty = facultyService.get(1L);
+        Faculty faculty = facultyService.get(id1);
         assertEquals(getFaculty1(), faculty);
     }
 
     @Test
     public void getNoFoundIdExceptionTest(){
-        assertThrows(NoFoundIdException.class, ()->facultyService.get(3L));
+        assertThrows(NoFoundIdException.class, ()->facultyService.get(id1));
     }
 
     @Test
@@ -61,7 +63,7 @@ public class FacultyServiceTest {
     public void getFacultyByColorTest(){
         when(facultyRepository.findByColor(any(String.class))).thenReturn(getFaculties());
 
-        List<Faculty> faculties = facultyService.getFacultyByColor("violet");
+        List<Faculty> faculties = facultyService.getFacultyByColor("blue");
         assertEquals(getFaculties(), faculties);
     }
 
@@ -70,7 +72,7 @@ public class FacultyServiceTest {
         Faculty faculty1 = getFaculty1();
         when(facultyRepository.getFacultyByStudent(any(Long.class))).thenReturn(faculty1);
 
-        Faculty facultyActual = facultyService.getFacultyByStudent(1L);
+        Faculty facultyActual = facultyService.getFacultyByStudent(id1);
         assertEquals(faculty1, facultyActual);
     }
 
@@ -85,7 +87,7 @@ public class FacultyServiceTest {
         Faculty facultyTest = new Faculty();
         facultyTest.setName(name1);
         facultyTest.setColor(color1);
-        facultyTest.setId(1L);
+        facultyTest.setId(id1);
         return facultyTest;
     }
 
@@ -93,7 +95,7 @@ public class FacultyServiceTest {
         Faculty facultyTest = new Faculty();
         facultyTest.setName(name2);
         facultyTest.setColor(color2);
-        facultyTest.setId(2L);
+        facultyTest.setId(id2);
         return facultyTest;
 
     }
