@@ -1,0 +1,9 @@
+databaseChangeLog:
+  - include:
+      file: liquibase/scripts/configuration.sql
+  - include:
+      file: liquibase/scripts/scripts421.sql
+  - include:
+      file: liquibase/scripts/scripts422.sql
+  - include:
+      file: liquibase/scripts/index.sql

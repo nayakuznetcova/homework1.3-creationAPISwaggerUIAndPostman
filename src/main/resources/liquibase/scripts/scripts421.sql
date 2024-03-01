@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+--changeset kuznetsovanaya:create_421
 alter table student
     add constraint age_check check (age>16);
 

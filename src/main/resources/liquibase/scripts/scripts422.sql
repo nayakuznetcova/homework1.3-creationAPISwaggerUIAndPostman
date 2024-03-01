@@ -1,3 +1,6 @@
+--liquibase formatted sql
+
+--changeset kuznetsovanaya:create_422
 create table car(
     id bigserial primary key,
     model text,
