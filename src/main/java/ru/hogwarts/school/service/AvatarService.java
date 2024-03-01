@@ -1,5 +1,7 @@
 package ru.hogwarts.school.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -18,6 +20,7 @@ import java.util.List;
 
 @Service
 public class AvatarService {
+    Logger logger = LoggerFactory.getLogger(AvatarService.class);
     private AvatarRepository avatarRepository;
     private StudentService studentService;
 
@@ -40,8 +43,10 @@ public class AvatarService {
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, 1000);
                 ){
             bufferedInputStream.transferTo(bufferedOutputStream);
+            logger.info("Загрузка аватара");
         }
         Avatar avatar = avatarRepository.findByStudentId(id);
+        logger.info("Поиск аватара");
         if (avatar == null){
             avatar = new Avatar();
         }
@@ -50,6 +55,7 @@ public class AvatarService {
         avatar.setFileSize(avatarFile.getSize());
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setData(avatarFile.getBytes());
+        logger.info("Сохранение аватара");
         return avatarRepository.save(avatar);
 
     }
@@ -59,11 +65,13 @@ public class AvatarService {
     }
 
     public Avatar getAvatarById(Long id){
+        logger.info("Получение аватара по id");
         return avatarRepository.findByStudentId(id);
     }
 
     public List<Avatar> getAllAvatars(Integer page, Integer size){
         Pageable pageable = PageRequest.of(page, size);
+        logger.info("Получение всех аватаров");
         return avatarRepository.findAll(pageable).getContent();
     }
 }
