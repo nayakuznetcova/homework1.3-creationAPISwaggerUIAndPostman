@@ -1,12 +1,18 @@
 package ru.hogwarts.school.service;
 
+import liquibase.pro.packaged.S;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exception.NoFoundIdException;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
+
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.OptionalDouble;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
@@ -66,5 +72,21 @@ public class StudentService {
     public List<Student> getLastStudents(){
         logger.info("Получение последних в списке студентов");
         return studentRepository.getLastStudents();
+    }
+
+    public List<Student> getStudentsByNameWithA(){
+        List<Student> students = studentRepository.findAll();
+        return students.stream().parallel()
+                .filter(student -> student.getName().startsWith("A"))
+                .collect(Collectors.toList());
+    }
+
+    public Integer getAverageAge(){
+        List<Student> students = studentRepository.findAll();
+        double average = students.stream().parallel()
+                .mapToInt(student -> student.getAge())
+                .summaryStatistics()
+                .getAverage();
+        return (int) average;
     }
 }

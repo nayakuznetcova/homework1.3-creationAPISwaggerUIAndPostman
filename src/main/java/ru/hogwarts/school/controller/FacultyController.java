@@ -60,4 +60,10 @@ public class FacultyController {
         Faculty facultyByStudent = facultyService.getFacultyByStudent(id);
         return ResponseEntity.ok(facultyByStudent);
     }
+
+    @GetMapping("/get-longest-name-faculty")
+    public ResponseEntity<String> getLongestNameFaculty(){
+        String nameFaculty = facultyService.getLongestNameFaculty();
+        return ResponseEntity.ok(nameFaculty);
+    }
 }

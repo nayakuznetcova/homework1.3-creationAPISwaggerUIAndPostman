@@ -1,5 +1,6 @@
 package ru.hogwarts.school.controller;
 
+import liquibase.pro.packaged.S;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.exception.NoFoundIdException;
 import ru.hogwarts.school.model.Student;
@@ -71,4 +72,16 @@ public class StudentController {
     public List<Student> getLastStudents(){
         return studentService.getLastStudents();
     }
+
+    @GetMapping("/get-students-by-name-with-a")
+    public List<Student> getStudentsByNameWithA(){
+        return studentService.getStudentsByNameWithA();
+    }
+
+    @GetMapping("/get-average-age")
+    public Integer getAverageAge(){
+        return studentService.getAverageAge();
+    }
+
+
 }

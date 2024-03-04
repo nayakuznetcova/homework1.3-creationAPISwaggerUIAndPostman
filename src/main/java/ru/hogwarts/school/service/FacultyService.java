@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+import liquibase.pro.packaged.F;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -46,5 +47,13 @@ public class FacultyService {
     public Faculty getFacultyByStudent(Long id){
         logger.info("Получение факультета по студенту");
         return facultyRepository.getFacultyByStudent(id);
+    }
+
+    public String getLongestNameFaculty(){
+        List<Faculty> faculty = facultyRepository.findAll();
+        return faculty.stream().parallel()
+                .max((x, y) -> x.getName().length() - y.getName().length())
+                .orElseThrow(() -> new RuntimeException("Ошибка"))
+                .getName();
     }
 }
