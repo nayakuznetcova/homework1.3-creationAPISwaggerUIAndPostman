@@ -76,14 +76,14 @@ public class StudentService {
 
     public List<Student> getStudentsByNameWithA(){
         List<Student> students = studentRepository.findAll();
-        return students.stream().parallel()
+        return students.stream()
                 .filter(student -> student.getName().startsWith("A"))
                 .collect(Collectors.toList());
     }
 
     public Integer getAverageAge(){
         List<Student> students = studentRepository.findAll();
-        double average = students.stream().parallel()
+        double average = students.stream()
                 .mapToInt(student -> student.getAge())
                 .summaryStatistics()
                 .getAverage();

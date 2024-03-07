@@ -51,7 +51,7 @@ public class FacultyService {
 
     public String getLongestNameFaculty(){
         List<Faculty> faculty = facultyRepository.findAll();
-        return faculty.stream().parallel()
+        return faculty.stream()
                 .max((x, y) -> x.getName().length() - y.getName().length())
                 .orElseThrow(() -> new RuntimeException("Ошибка"))
                 .getName();
