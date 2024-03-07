@@ -23,8 +23,9 @@ public class FacultyServiceTest {
     private String color2 = "blue";
     private Long id1 = 1L;
     private Long id2 = 2L;
+
     @BeforeEach
-    public void init(){
+    public void init() {
         facultyRepository = Mockito.mock(FacultyRepository.class);
         facultyService = new FacultyService(facultyRepository);
     }
@@ -38,12 +39,12 @@ public class FacultyServiceTest {
     }
 
     @Test
-    public void getNoFoundIdExceptionTest(){
-        assertThrows(NoFoundIdException.class, ()->facultyService.get(id1));
+    public void getNoFoundIdExceptionTest() {
+        assertThrows(NoFoundIdException.class, () -> facultyService.get(id1));
     }
 
     @Test
-    public void addTest(){
+    public void addTest() {
         when(facultyRepository.save(any(Faculty.class))).thenReturn(getFaculty1());
 
         Faculty faculty = facultyService.add(new Faculty(name1, color1));
@@ -51,7 +52,7 @@ public class FacultyServiceTest {
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         Faculty faculty = getFaculty1();
         when(facultyRepository.save(any(Faculty.class))).thenReturn(faculty);
 
@@ -60,7 +61,7 @@ public class FacultyServiceTest {
     }
 
     @Test
-    public void getFacultyByColorTest(){
+    public void getFacultyByColorTest() {
         when(facultyRepository.findByColor(any(String.class))).thenReturn(getFaculties());
 
         List<Faculty> faculties = facultyService.getFacultyByColor("blue");
@@ -68,7 +69,7 @@ public class FacultyServiceTest {
     }
 
     @Test
-    public void getFacultyByStudentTest(){
+    public void getFacultyByStudentTest() {
         Faculty faculty1 = getFaculty1();
         when(facultyRepository.getFacultyByStudent(any(Long.class))).thenReturn(faculty1);
 
@@ -76,14 +77,14 @@ public class FacultyServiceTest {
         assertEquals(faculty1, facultyActual);
     }
 
-    private List <Faculty> getFaculties(){
+    private List<Faculty> getFaculties() {
         List<Faculty> facultyList = new ArrayList<>();
         facultyList.add(getFaculty1());
         facultyList.add(getFaculty2());
         return facultyList;
     }
 
-    private Faculty getFaculty1(){
+    private Faculty getFaculty1() {
         Faculty facultyTest = new Faculty();
         facultyTest.setName(name1);
         facultyTest.setColor(color1);
@@ -91,7 +92,7 @@ public class FacultyServiceTest {
         return facultyTest;
     }
 
-    private Faculty getFaculty2(){
+    private Faculty getFaculty2() {
         Faculty facultyTest = new Faculty();
         facultyTest.setName(name2);
         facultyTest.setColor(color2);

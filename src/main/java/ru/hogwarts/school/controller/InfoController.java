@@ -13,16 +13,17 @@ import java.util.stream.Stream;
 public class InfoController {
     @Value("${server.port}")
     private Integer port;
+
     @GetMapping
-    public ResponseEntity<Integer> getPort(){
+    public ResponseEntity<Integer> getPort() {
         return ResponseEntity.ok(port);
     }
 
     @GetMapping("/return-number")
-    public Integer returnNumber(){
-        return Stream.iterate(1, a -> a +1)
+    public Integer returnNumber() {
+        return Stream.iterate(1, a -> a + 1)
                 .parallel()
                 .limit(1_000_000)
-                .reduce(0, (a, b) -> a + b );
+                .reduce(0, (a, b) -> a + b);
     }
 }

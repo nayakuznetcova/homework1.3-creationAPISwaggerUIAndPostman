@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import ru.hogwarts.school.exception.NoFoundIdException;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.repository.FacultyRepository;
+
 import java.util.List;
 
 @Service
@@ -24,9 +25,9 @@ public class FacultyService {
 
     }
 
-    public Faculty get(Long id) throws NoFoundIdException{
+    public Faculty get(Long id) throws NoFoundIdException {
         logger.info("Получение факультета");
-        return facultyRepository.findById(id).orElseThrow(()->new NoFoundIdException("Это id не найдено"));
+        return facultyRepository.findById(id).orElseThrow(() -> new NoFoundIdException("Это id не найдено"));
     }
 
     public Faculty update(Faculty faculty) {
@@ -44,14 +45,14 @@ public class FacultyService {
         return facultyRepository.findByColor(color);
     }
 
-    public Faculty getFacultyByStudent(Long id){
+    public Faculty getFacultyByStudent(Long id) {
         logger.info("Получение факультета по студенту");
         return facultyRepository.getFacultyByStudent(id);
     }
 
-    public String getLongestNameFaculty(){
+    public String getLongestNameFaculty() {
         List<Faculty> faculty = facultyRepository.findAll();
-        return faculty.stream()
+        return faculty.stream().parallel()
                 .max((x, y) -> x.getName().length() - y.getName().length())
                 .orElseThrow(() -> new RuntimeException("Ошибка"))
                 .getName();

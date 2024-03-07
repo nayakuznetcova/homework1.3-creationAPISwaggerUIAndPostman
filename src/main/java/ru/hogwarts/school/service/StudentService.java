@@ -1,6 +1,8 @@
 package ru.hogwarts.school.service;
 
+import liquibase.pro.packaged.L;
 import liquibase.pro.packaged.S;
+import liquibase.pro.packaged.T;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -8,10 +10,7 @@ import ru.hogwarts.school.exception.NoFoundIdException;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
-import java.util.OptionalDouble;
 import java.util.stream.Collectors;
 
 @Service
@@ -31,7 +30,7 @@ public class StudentService {
 
     public Student get(Long id) throws NoFoundIdException {
         logger.info("Поиск студента");
-        return studentRepository.findById(id).orElseThrow(()->new NoFoundIdException("Это id не найдено"));
+        return studentRepository.findById(id).orElseThrow(() -> new NoFoundIdException("Это id не найдено"));
     }
 
     public Student update(Student student) {
@@ -54,39 +53,78 @@ public class StudentService {
         return studentRepository.findByAgeBetween(min, max);
     }
 
-    public List<Student> getStudentsByFaculty(String facultyName){
+    public List<Student> getStudentsByFaculty(String facultyName) {
         logger.info("Поиск студентов по факультету");
         return studentRepository.getStudentsByFaculty(facultyName);
     }
 
-    public Long getCountStudent(){
+    public Long getCountStudent() {
         logger.info("Подсчет колличества студентов");
         return studentRepository.getCountStudent();
     }
 
-    public Long getAverageAgeStudent(){
+    public Long getAverageAgeStudent() {
         logger.info("Поиск среднего возраста студентов");
         return studentRepository.getAverageAgeStudent();
     }
 
-    public List<Student> getLastStudents(){
+    public List<Student> getLastStudents() {
         logger.info("Получение последних в списке студентов");
         return studentRepository.getLastStudents();
     }
 
-    public List<Student> getStudentsByNameWithA(){
+    public List<Student> getStudentsByNameWithA() {
         List<Student> students = studentRepository.findAll();
         return students.stream()
                 .filter(student -> student.getName().startsWith("A"))
                 .collect(Collectors.toList());
     }
 
-    public Integer getAverageAge(){
+    public Integer getAverageAge() {
         List<Student> students = studentRepository.findAll();
         double average = students.stream()
                 .mapToInt(student -> student.getAge())
                 .summaryStatistics()
                 .getAverage();
         return (int) average;
+    }
+
+    public void printStudentThread() {
+        List<Student> students = studentRepository.findAll();
+        System.out.println(students.get(0));
+        System.out.println(students.get(1));
+        Thread thread1 = new Thread(() -> {
+            System.out.println(students.get(2));
+            System.out.println(students.get(3));
+        });
+        Thread thread2 = new Thread(() -> {
+            System.out.println(students.get(4));
+            System.out.println(students.get(5));
+        });
+        thread1.start();
+        thread2.start();
+    }
+
+    public void printStudentThreadSynchronized() {
+        List<Student> students = studentRepository.findAll();
+        synchronized (students) {
+            System.out.println(students.get(0));
+            System.out.println(students.get(1));
+        }
+
+        Thread thread1 = new Thread(() -> {
+            synchronized (students) {
+                System.out.println(students.get(2));
+                System.out.println(students.get(3));
+            }
+        });
+        Thread thread2 = new Thread(() -> {
+            synchronized (students) {
+                System.out.println(students.get(4));
+                System.out.println(students.get(5));
+            }
+        });
+        thread1.start();
+        thread2.start();
     }
 }

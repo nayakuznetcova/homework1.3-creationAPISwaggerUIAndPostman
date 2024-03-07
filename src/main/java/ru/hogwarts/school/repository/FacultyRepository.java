@@ -11,6 +11,7 @@ import java.util.List;
 @Repository
 public interface FacultyRepository extends JpaRepository<Faculty, Long> {
     List<Faculty> findByColor(String color);
+
     @Query(value = "select faculty.* from student " +
             "inner join faculty on student.faculty_id=faculty.id " +
             "where student.id=?1", nativeQuery = true)

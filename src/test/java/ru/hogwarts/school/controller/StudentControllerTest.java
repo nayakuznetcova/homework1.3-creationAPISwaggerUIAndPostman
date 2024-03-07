@@ -105,10 +105,10 @@ public class StudentControllerTest {
 
     @Test
     public void getStudentsByAgeBetweenTest() throws Exception {
-        when(studentRepository.findByAgeBetween(any(Integer.class),any(Integer.class))).thenReturn(getStudents());
+        when(studentRepository.findByAgeBetween(any(Integer.class), any(Integer.class))).thenReturn(getStudents());
 
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/student/get-by-age-between?min=20&max=22"))
+                        .get("/student/get-by-age-between?min=20&max=22"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].age").value(age1))
@@ -123,7 +123,7 @@ public class StudentControllerTest {
     public void getStudentsByFacultyTest() throws Exception {
         when(studentRepository.getStudentsByFaculty(any(String.class))).thenReturn(getStudents());
         mockMvc.perform(MockMvcRequestBuilders
-                .get("/student/get-students-by-faculty?facultyName=name"))
+                        .get("/student/get-students-by-faculty?facultyName=name"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$").isArray())
                 .andExpect(jsonPath("$[0].age").value(age1))

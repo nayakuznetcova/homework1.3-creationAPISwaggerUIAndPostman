@@ -36,18 +36,18 @@ public class AvatarService {
 
         Files.createDirectories(filePath.getParent());
         Files.deleteIfExists(filePath);
-        try(
+        try (
                 InputStream inputStream = avatarFile.getInputStream();
                 OutputStream outputStream = Files.newOutputStream(filePath, StandardOpenOption.CREATE_NEW);
                 BufferedInputStream bufferedInputStream = new BufferedInputStream(inputStream, 1000);
                 BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(outputStream, 1000);
-                ){
+        ) {
             bufferedInputStream.transferTo(bufferedOutputStream);
             logger.info("Загрузка аватара");
         }
         Avatar avatar = avatarRepository.findByStudentId(id);
         logger.info("Поиск аватара");
-        if (avatar == null){
+        if (avatar == null) {
             avatar = new Avatar();
         }
         avatar.setStudent(student);
@@ -60,16 +60,16 @@ public class AvatarService {
 
     }
 
-    private String getExtension(String fileName){
-        return fileName.substring(fileName.lastIndexOf(".")+1);
+    private String getExtension(String fileName) {
+        return fileName.substring(fileName.lastIndexOf(".") + 1);
     }
 
-    public Avatar getAvatarById(Long id){
+    public Avatar getAvatarById(Long id) {
         logger.info("Получение аватара по id");
         return avatarRepository.findByStudentId(id);
     }
 
-    public List<Avatar> getAllAvatars(Integer page, Integer size){
+    public List<Avatar> getAllAvatars(Integer page, Integer size) {
         Pageable pageable = PageRequest.of(page, size);
         logger.info("Получение всех аватаров");
         return avatarRepository.findAll(pageable).getContent();

@@ -24,11 +24,13 @@ public class StudentServiceTest {
     private int age2 = 20;
     private Long id1 = 1L;
     private Long id2 = 2L;
+
     @BeforeEach
-    public void init(){
+    public void init() {
         studentRepository = Mockito.mock(StudentRepository.class);
         studentService = new StudentService(studentRepository);
     }
+
     @Test
     public void getTest() throws NoFoundIdException {
         when(studentRepository.findById(id2)).thenReturn(Optional.of(getStudent2()));
@@ -38,12 +40,12 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void getNoFoundIdExceptionTest(){
-        assertThrows(NoFoundIdException.class, ()->studentService.get(id2));
+    public void getNoFoundIdExceptionTest() {
+        assertThrows(NoFoundIdException.class, () -> studentService.get(id2));
     }
 
     @Test
-    public void addTest(){
+    public void addTest() {
         when(studentRepository.save(any(Student.class))).thenReturn(getStudent2());
 
         Student student = studentService.add(name2, age2);
@@ -51,7 +53,7 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void updateTest(){
+    public void updateTest() {
         Student student = getStudent2();
         when(studentRepository.save(any(Student.class))).thenReturn(student);
 
@@ -60,7 +62,7 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void getStudentsByAgeTest(){
+    public void getStudentsByAgeTest() {
         when(studentRepository.findByAge(any(Integer.class))).thenReturn(getStudents());
 
         List<Student> students = studentService.getStudentsByAge(20);
@@ -68,29 +70,29 @@ public class StudentServiceTest {
     }
 
     @Test
-    public void getStudentsByAgeBetweenTest(){
-        when(studentRepository.findByAgeBetween(any(Integer.class),any(Integer.class))).thenReturn(getStudents());
+    public void getStudentsByAgeBetweenTest() {
+        when(studentRepository.findByAgeBetween(any(Integer.class), any(Integer.class))).thenReturn(getStudents());
 
         List<Student> students = studentService.getStudentsByAgeBetween(20, 22);
         assertEquals(getStudents(), students);
     }
 
     @Test
-    public void getStudentsByFacultyTest(){
+    public void getStudentsByFacultyTest() {
         when(studentRepository.getStudentsByFaculty(any(String.class))).thenReturn(getStudents());
 
         List<Student> students = studentService.getStudentsByFaculty("NAME");
         assertEquals(getStudents(), students);
     }
 
-    private List <Student> getStudents(){
+    private List<Student> getStudents() {
         List<Student> studentList = new ArrayList<>();
         studentList.add(getStudent1());
         studentList.add(getStudent2());
         return studentList;
     }
 
-    private Student getStudent1(){
+    private Student getStudent1() {
         Student studentTest = new Student();
         studentTest.setName(name1);
         studentTest.setAge(age1);
@@ -98,7 +100,7 @@ public class StudentServiceTest {
         return studentTest;
     }
 
-    private Student getStudent2(){
+    private Student getStudent2() {
         Student studentTest = new Student();
         studentTest.setName(name2);
         studentTest.setAge(age2);

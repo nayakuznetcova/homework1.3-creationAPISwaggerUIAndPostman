@@ -1,6 +1,5 @@
 package ru.hogwarts.school.controller;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -20,18 +19,19 @@ public class StudentControllerRestTest {
     private String name2 = "Petr";
     private int age1 = 22;
     private int age2 = 20;
+
     @Test
-    public void contextLoad(){
+    public void contextLoad() {
 
     }
 
     @Test
-    public void addAndGetAndDeleteTest(){
+    public void addAndGetAndDeleteTest() {
         Student responsePost
-                = testRestTemplate.postForObject("http://localhost:"+port+"/student?name="+name2+"&age="+age2, null,Student.class);
+                = testRestTemplate.postForObject("http://localhost:" + port + "/student?name=" + name2 + "&age=" + age2, null, Student.class);
 
         String responseGet
-                = testRestTemplate.getForObject("http://localhost:"+port+"/student?id="+responsePost.getId(), String.class);
+                = testRestTemplate.getForObject("http://localhost:" + port + "/student?id=" + responsePost.getId(), String.class);
         assertEquals(responseGet, responsePost.toString());
     }
 

@@ -27,19 +27,21 @@ public class AvatarController {
     public AvatarController(AvatarService avatarService) {
         this.avatarService = avatarService;
     }
+
     @PostMapping(value = "/student/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public Avatar uploadAvatar(@PathVariable Long id,@RequestParam MultipartFile avatarFile) throws  NoFoundIdException, IOException {
+    public Avatar uploadAvatar(@PathVariable Long id, @RequestParam MultipartFile avatarFile) throws NoFoundIdException, IOException {
         return avatarService.uploadAvatar(id, avatarFile);
     }
+
     @GetMapping("/get-avatar/{id}")
-    public void getAvatarById (@PathVariable Long id, HttpServletResponse response) throws IOException {
+    public void getAvatarById(@PathVariable Long id, HttpServletResponse response) throws IOException {
         Avatar avatar = avatarService.getAvatarById(id);
         Path path = Path.of(avatar.getFilePath());
 
         try (
                 InputStream is = Files.newInputStream(path);
                 OutputStream os = response.getOutputStream();
-                ){
+        ) {
             response.setStatus(HttpStatus.OK.value());
             response.setContentType(avatar.getMediaType());
             response.setContentLength(Math.toIntExact(avatar.getFileSize()));
@@ -48,7 +50,7 @@ public class AvatarController {
     }
 
     @GetMapping("/get-avatar-from-bd/{id}")
-    public ResponseEntity<byte[]> getAvatarFromBD(@PathVariable Long id){
+    public ResponseEntity<byte[]> getAvatarFromBD(@PathVariable Long id) {
         Avatar avatar = avatarService.getAvatarById(id);
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.valueOf(avatar.getMediaType()));
@@ -57,7 +59,7 @@ public class AvatarController {
     }
 
     @GetMapping("/get-all-avatars")
-    public ResponseEntity<List<Avatar>> getAllAvatars(@RequestParam int page, @RequestParam int size){
+    public ResponseEntity<List<Avatar>> getAllAvatars(@RequestParam int page, @RequestParam int size) {
         List<Avatar> avatars = avatarService.getAllAvatars(page, size);
         return ResponseEntity.ok(avatars);
     }

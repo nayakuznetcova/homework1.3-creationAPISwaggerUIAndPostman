@@ -10,7 +10,9 @@ import java.util.List;
 @Repository
 public interface StudentRepository extends JpaRepository<Student, Long> {
     List<Student> findByAge(int age);
+
     List<Student> findByAgeBetween(int min, int max);
+
     @Query(value = "select student.* from student " +
             "inner join faculty on student.faculty_id=faculty.id " +
             "where faculty.name=?1", nativeQuery = true)
